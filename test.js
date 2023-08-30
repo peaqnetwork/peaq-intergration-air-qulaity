@@ -1,10 +1,14 @@
 const SDS011Wrapper = require("sds011-wrapper");
 
-const main = () => {
+const main = async () => {
   try {
     const sensor = new SDS011Wrapper("/dev/ttyUSB0");
 
-    console.log("Sensor is now working in passive mode.", sensor);
+    console.log("Sensor is now working in passive mode.");
+    const version = await sensor.getVersion();
+    console.log("Version:", version);
+    const reporting = await sensor.getReportingMode();
+    console.log("Reporting mode:", reporting);
 
     sensor
     .setReportingMode('active')
