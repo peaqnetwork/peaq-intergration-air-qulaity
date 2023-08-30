@@ -4,6 +4,8 @@ const main = () => {
   try {
     const sensor = new SDS011Wrapper("/dev/ttyUSB0");
 
+    console.log("Sensor is now working in passive mode.", sensor);
+
     sensor
     .setReportingMode('active')
     .then(() => {
