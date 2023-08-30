@@ -10,7 +10,7 @@ redis_client = redis.StrictRedis(host=os.environ.get('REDIS_HOST'), port=6379, d
 class AirQualityMonitor():
 
     def __init__(self):
-        self.sds = SDS011(port='/dev/ttyUSB*')
+        self.sds = SDS011(port='/dev/ttyUSB0')
         self.sds.period = 0
         self.sds.mode = 1
         print('SDS011 sensor initialized', self.sds.active)
