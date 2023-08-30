@@ -11,15 +11,9 @@ class AirQualityMonitor():
 
     def __init__(self):
         self.sds = SDS011(port='/dev/ttyUSB0')
-
-        try:
-            self.sds.open('/dev/ttyUSB0')
-            print(self.sds.active)
-        except Exception as e:
-            print("Error opening SDS011:", e)
-
-        self.sds.period = 1
+        self.sds.open('/dev/ttyUSB0')
         self.sds.mode = 0
+        self.sds.period = 1
         print('SDS011 sensor initialized', self.sds.active)
 
     def get_measurement(self):
