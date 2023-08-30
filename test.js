@@ -2,7 +2,7 @@ const SDS011Wrapper = require("sds011-wrapper");
 
 const main = () => {
   try {
-    const sensor = new SDS011Wrapper("/dev/serial/by-path/ttyUSB0");
+    const sensor = new SDS011Wrapper("/dev/ttyUSB0");
 
     sensor
     .setReportingMode('active')
