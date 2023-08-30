@@ -1,4 +1,4 @@
-sds011==0.2.0
+simple-sds011==0.0.7
 ipython
 flask
 redis

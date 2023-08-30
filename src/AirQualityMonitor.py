@@ -1,7 +1,8 @@
 import json
+import simple_sds011
 import os
 import time
-from sds011 import SDS011
+from simple_sds011 import SDS011
 import redis
 
 redis_client = redis.StrictRedis(host=os.environ.get('REDIS_HOST'), port=6379, db=0)
@@ -10,13 +11,14 @@ redis_client = redis.StrictRedis(host=os.environ.get('REDIS_HOST'), port=6379, d
 class AirQualityMonitor():
 
     def __init__(self):
-        self.sds = SDS011(port='/dev/ttyUSB0')
-        self.sds.set_working_period(rate=1)
+	self.sds = SDS011(port='/dev/ttyUSB0')
+        self.sds.mode = simple_sds011.MODE_CONTINUOUS
+        self.sds.period = 1
 
     def get_measurement(self):
         return {
             'time': int(time.time()),
-            'measurement': self.sds.read_measurement(),
+            'measurement': self.sds.query(),
         }
 
     def save_measurement_to_redis(self):
