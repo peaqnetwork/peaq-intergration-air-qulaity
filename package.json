@@ -1,0 +1,22 @@
+{
+  "name": "peaq-intergration-air-qulaity",
+  "version": "1.0.0",
+  "description": "A simple air quality monitoring service for the Raspberry Pi.",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peaqnetwork/peaq-intergration-air-qulaity.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/peaqnetwork/peaq-intergration-air-qulaity/issues"
+  },
+  "homepage": "https://github.com/peaqnetwork/peaq-intergration-air-qulaity#readme",
+  "dependencies": {
+    "sds011-wrapper": "^1.4.0"
+  }
+}
