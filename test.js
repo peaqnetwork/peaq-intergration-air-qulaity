@@ -5,10 +5,10 @@ const main = async () => {
     const sensor = new SDS011Wrapper("/dev/ttyUSB0");
 
     console.log("Sensor is now working in passive mode.");
-    const version = await sensor.getVersion();
-    console.log("Version:", version);
     const reporting = await sensor.getReportingMode();
     console.log("Reporting mode:", reporting);
+    const version = await sensor.getVersion();
+    console.log("Version:", version);
 
     sensor
     .setReportingMode('active')
