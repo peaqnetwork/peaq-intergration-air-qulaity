@@ -11,9 +11,9 @@ class AirQualityMonitor():
 
     def __init__(self):
         self.sds = SDS011(port='/dev/ttyUSB0')
-        print("test", self.sds.active)
-        self.sds.mode = simple_sds011.MODE_CONTINUOUS
-        self.sds.period = 1
+        self.sds.period = 0
+        self.sds.mode = 1
+        print('SDS011 sensor initialized', self.sds.active)
 
     def get_measurement(self):
         return {
