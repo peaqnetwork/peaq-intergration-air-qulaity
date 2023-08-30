@@ -1,5 +1,6 @@
 import json
 import os
+import simple_sds011
 import time
 from simple_sds011 import SDS011
 import redis
@@ -10,7 +11,7 @@ class AirQualityMonitor():
 
     def __init__(self):
         self.sds = SDS011(port='/dev/ttyUSB0')
-        self.sds.mode = SDS011.MODE_CONTINUOUS
+        self.sds.mode = simple_sds011.MODE_CONTINUOUS
         self.sds.period = 1
 
     def get_measurement(self):
