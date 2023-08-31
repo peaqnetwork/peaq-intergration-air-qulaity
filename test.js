@@ -1,6 +1,5 @@
 const SDS011Wrapper = require("sds011-wrapper");
-const { SerialPort } = require("serialport");
-const Readline = require("@serialport/parser-readline");
+const { SerialPort, ReadlineParser } = require("serialport");
 
 const main = async () => {
   try {
@@ -38,13 +37,13 @@ const main = async () => {
 // main();
 
 const test = async () => {
-  const port = new SerialPort("/dev/ttyUSB0", { baudRate: 9600 }, function (err) {
+  const port = new SerialPort({ baudRate: 9600, path: "/dev/ttyUSB0" }, function (err) {
     if (err) {
       return console.log('Error: ', err.message)
     }
   });
 
-  const parser = port.pipe(new Readline({ delimiter: "\r\n" }));
+  const parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
 
   parser.on("data", (data) => {
     let buffer = Buffer.from(data, "hex");
