@@ -56,7 +56,7 @@ const test = async () => {
 
   // Read data that is available but keep the stream in "paused mode"
   port.on('readable', function () {
-  console.log('Data:', port.read())
+  console.log('Data:fffff', port.read())
   })
 
     // Switches the port into "flowing mode"
