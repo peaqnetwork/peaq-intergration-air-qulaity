@@ -66,7 +66,7 @@ const test = async () => {
   // Read data that is available but keep the stream in "paused mode"
   port.on("readable", function () {
     const data = port.read();
-    console.log("Data:readable", port.read());
+    console.log("Data:readable", data);
     let buffer = Buffer.from(data, "hex");
     if (buffer.length === 10 && buffer[0] === 0xaa && buffer[1] === 0xc0) {
       let pm25 = (buffer[3] * 256 + buffer[2]) / 10.0;
