@@ -53,26 +53,37 @@ const test = async () => {
 
   // const parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
 
-  parser.on("data", (data) => {
-    let buffer = Buffer.from(data, "hex");
-    if (buffer.length === 10 && buffer[0] === 0xaa && buffer[1] === 0xc0) {
-      let pm25 = (buffer[3] * 256 + buffer[2]) / 10.0;
-      let pm10 = (buffer[5] * 256 + buffer[4]) / 10.0;
-      console.log(`parser PM2.5: ${pm25} μg/m3, parser PM10: ${pm10} μg/m3`);
-    }
-    console.log("this parser", data);
-  });
+  port.write(Buffer.from([0xaa, 0xb4, 0x06, 0x01, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff])); 
+
+parser.on('data', line => {
+  const pm25 = parseInt(line.slice(2, 4), 16);
+  const pm10 = parseInt(line.slice(4, 6), 16);
+  
+  console.log('parser PM 2.5:', pm25, 'μg/m^3');
+  console.log('parser PM 10:', pm10, 'μg/m^3');
+});
+
+
+  // parser.on("data", (data) => {
+  //   let buffer = Buffer.from(data, "hex");
+  //   if (buffer.length === 10 && buffer[0] === 0xaa && buffer[1] === 0xc0) {
+  //     let pm25 = (buffer[3] * 256 + buffer[2]) / 10.0;
+  //     let pm10 = (buffer[5] * 256 + buffer[4]) / 10.0;
+  //     console.log(`parser PM2.5: ${pm25} μg/m3, parser PM10: ${pm10} μg/m3`);
+  //   }
+  //   console.log("this parser", data);
+  // });
 
   // Read data that is available but keep the stream in "paused mode"
   port.on("readable", function () {
     const data = port.read();
     console.log("Data:readable", data);
     let buffer = Buffer.from(data, "hex");
-    // if (buffer.length === 10 && buffer[0] === 0xaa && buffer[1] === 0xc0) {
+    if (buffer.length === 10 && buffer[0] === 0xaa && buffer[1] === 0xc0) {
       let pm25 = (buffer[3] * 256 + buffer[2]) / 10.0;
       let pm10 = (buffer[5] * 256 + buffer[4]) / 10.0;
       console.log(`Readble PM2.5: ${pm25} μg/m3, PM10: ${pm10} μg/m3`);
-    // }
+    }
   });
 
   // // Switches the port into "flowing mode"
