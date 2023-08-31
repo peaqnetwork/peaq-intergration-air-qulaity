@@ -38,7 +38,11 @@ const main = async () => {
 // main();
 
 const test = async () => {
-  const port = new SerialPort("/dev/ttyUSB0", { baudRate: 9600 });
+  const port = new SerialPort("/dev/ttyUSB0", { baudRate: 9600 }, function (err) {
+    if (err) {
+      return console.log('Error: ', err.message)
+    }
+  });
 
   const parser = port.pipe(new Readline({ delimiter: "\r\n" }));
 
