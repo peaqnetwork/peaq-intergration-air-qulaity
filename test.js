@@ -37,11 +37,14 @@ const main = async () => {
 // main();
 
 const test = async () => {
-  const port = new SerialPort({ baudRate: 9600, path: "/dev/ttyUSB0" }, function (err) {
-    if (err) {
-      return console.log('Error: ', err.message)
+  const port = new SerialPort(
+    { baudRate: 9600, path: "/dev/ttyUSB0" },
+    function (err) {
+      if (err) {
+        return console.log("Error: ", err.message);
+      }
     }
-  });
+  );
 
   const parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
 
@@ -56,26 +59,26 @@ const test = async () => {
   });
 
   // Read data that is available but keep the stream in "paused mode"
-  port.on('readable', function () {
+  port.on("readable", function () {
     const data = port.read();
+    console.log("Data:readable", port.read());
     let buffer = Buffer.from(data, "hex");
     if (buffer.length === 10 && buffer[0] === 0xaa && buffer[1] === 0xc0) {
       let pm25 = (buffer[3] * 256 + buffer[2]) / 10.0;
       let pm10 = (buffer[5] * 256 + buffer[4]) / 10.0;
       console.log(`Readble PM2.5: ${pm25} μg/m3, PM10: ${pm10} μg/m3`);
     }
-  console.log('Data:readable', port.read())
-  })
+  });
 
-    // Switches the port into "flowing mode"
-    port.on('data', function (data) {
-      let buffer = Buffer.from(data, "hex");
-    if (buffer.length === 10 && buffer[0] === 0xaa && buffer[1] === 0xc0) {
-      let pm25 = (buffer[3] * 256 + buffer[2]) / 10.0;
-      let pm10 = (buffer[5] * 256 + buffer[4]) / 10.0;
-      console.log(`data PM2.5: ${pm25} μg/m3, PM10: ${pm10} μg/m3`);
-    }
-    })
+  // // Switches the port into "flowing mode"
+  // port.on("data", function (data) {
+  //   let buffer = Buffer.from(data, "hex");
+  //   if (buffer.length === 10 && buffer[0] === 0xaa && buffer[1] === 0xc0) {
+  //     let pm25 = (buffer[3] * 256 + buffer[2]) / 10.0;
+  //     let pm10 = (buffer[5] * 256 + buffer[4]) / 10.0;
+  //     console.log(`data PM2.5: ${pm25} μg/m3, PM10: ${pm10} μg/m3`);
+  //   }
+  // });
 
   port.on("error", (err) => {
     console.error("Errorrr:", err.message);
