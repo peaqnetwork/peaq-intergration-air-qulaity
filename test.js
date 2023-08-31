@@ -52,6 +52,7 @@ const test = async () => {
       let pm10 = (buffer[5] * 256 + buffer[4]) / 10.0;
       console.log(`PM2.5: ${pm25} μg/m3, PM10: ${pm10} μg/m3`);
     }
+    console.log("this parser", data);
   });
 
   // Read data that is available but keep the stream in "paused mode"
