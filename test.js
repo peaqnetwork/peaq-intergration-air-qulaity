@@ -50,7 +50,7 @@ const test = async () => {
     if (buffer.length === 10 && buffer[0] === 0xaa && buffer[1] === 0xc0) {
       let pm25 = (buffer[3] * 256 + buffer[2]) / 10.0;
       let pm10 = (buffer[5] * 256 + buffer[4]) / 10.0;
-      console.log(`PM2.5: ${pm25} μg/m3, PM10: ${pm10} μg/m3`);
+      console.log(`parser PM2.5: ${pm25} μg/m3, parser PM10: ${pm10} μg/m3`);
     }
     console.log("this parser", data);
   });
