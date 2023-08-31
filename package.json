@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/peaqnetwork/peaq-intergration-air-qulaity#readme",
   "dependencies": {
-    "sds011-wrapper": "^1.4.0"
+    "sds011-wrapper": "^1.4.0",
+    "serialport": "^12.0.0"
   }
 }
