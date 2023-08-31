@@ -1,5 +1,5 @@
 const SDS011Wrapper = require("sds011-wrapper");
-const SerialPort = require("serialport");
+const { SerialPort } = require("serialport");
 const Readline = require("@serialport/parser-readline");
 
 const main = async () => {
@@ -50,6 +50,16 @@ const test = async () => {
       console.log(`PM2.5: ${pm25} μg/m3, PM10: ${pm10} μg/m3`);
     }
   });
+
+  // Read data that is available but keep the stream in "paused mode"
+  port.on('readable', function () {
+  console.log('Data:', port.read())
+  })
+
+    // Switches the port into "flowing mode"
+    port.on('data', function (data) {
+      console.log('Data:', data)
+    })
 
   port.on("error", (err) => {
     console.error("Errorrr:", err.message);
