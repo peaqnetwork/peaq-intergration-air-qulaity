@@ -76,7 +76,7 @@ const getAndStoreSensorData = async () => {
   );
 
   const checkIfExists = await getStorage("sensorData");
-  const actionType = checkIfExists ? "updateItem" : "addItem";
+  const actionType = checkIfExists && !checkIfExists?.isStorageFallback ? "updateItem" : "addItem";
 
   console.log("checkIfExists", checkIfExists);
     console.log("actionType", actionType);
