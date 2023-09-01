@@ -102,8 +102,9 @@ const getAndStoreSensorData = async () => {
     if (buffer.length >= 9 && ((buffer[0] === 0xaa && buffer[1] === 0xc0) || buffer[0] === 0xc0)) {
       let pm25 = (buffer[3] * 256 + buffer[2]) / 10.0;
       let pm10 = (buffer[5] * 256 + buffer[4]) / 10.0;
+      const blockData = { pm25, pm10 };
       console.log(`Readble PM2.5: ${pm25} μg/m3, PM10: ${pm10} μg/m3`);
-      callStoragePallet("sensorData", JSON.stringify(data), actionType);
+      callStoragePallet("sensorData", JSON.stringify(blockData), actionType);
     }
   });
 

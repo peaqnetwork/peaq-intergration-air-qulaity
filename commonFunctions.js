@@ -59,7 +59,7 @@ const sendTransaction = async (extrinsic, keyPair, nonce) => {
   const hash = await extrinsic.signAndSend(keyPair, { nonce }, (result) => {
     console.log(`Current status is ${result.status}`);
   });
-  console.log("txhash", hash);
+  console.log("txhash", result.txHash.toHex());
   return hash;
 };
 
