@@ -17,6 +17,11 @@
   },
   "homepage": "https://github.com/peaqnetwork/peaq-intergration-air-qulaity#readme",
   "dependencies": {
+    "@peaq-network/sdk": "^0.4.5",
+    "@polkadot/api": "^10.9.1",
+    "@polkadot/keyring": "^12.4.2",
+    "@polkadot/util": "^12.4.2",
+    "@polkadot/util-crypto": "^12.4.2",
     "sds011-wrapper": "^1.4.0",
     "serialport": "^12.0.0"
   }
