@@ -7,6 +7,10 @@ const {
   sendTransaction,
 } = require("./commonFunctions");
 const { networks } = require("./constants");
+const fs = require('fs');
+const path = require('path');
+
+const dataFilePath = path.resolve(__dirname, 'data.json');
 
 const { Sdk } = require("@peaq-network/sdk");
 const { SerialPort, ReadlineParser } = require("serialport");
@@ -30,6 +34,30 @@ const createDid = async () => {
   did.unsubscribe();
 
   sdkInstance.disconnect();
+};
+
+const storeDataFromFile = async () => {
+  try {
+    // Check if file exists
+    if (!fs.existsSync(dataFilePath)) {
+      console.log('data.json does not exist');
+      return;
+    }
+
+    // Read the file
+    const data = fs.readFileSync(dataFilePath, 'utf-8');
+    const parsedData = JSON.parse(data);
+
+    // Check if the data exists on the chain
+    const checkIfExists = await getStorage("sensorData");
+    const actionType = checkIfExists && !checkIfExists?.isStorageFallback ? "updateItem" : "addItem";
+
+    // Call the storage pallet with the read data
+    await callStoragePallet("sensorData", JSON.stringify(parsedData), actionType);
+    console.log('Data from file stored successfully');
+  } catch (error) {
+    console.error('Error reading or storing data from file', error);
+  }
 };
 
 const callStoragePallet = async (itemType, value, action) => {
@@ -118,8 +146,9 @@ const getAndStoreSensorData = async () => {
 
 const main = async () => {
   await cryptoWaitReady();
-    await createDid();
-    await getAndStoreSensorData();
+  await createDid();
+  await storeDataFromFile();
+    // await getAndStoreSensorData();
 };
 
 main();
