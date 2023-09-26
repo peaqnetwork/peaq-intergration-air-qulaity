@@ -1,6 +1,10 @@
 const SDS011Wrapper = require("sds011-wrapper");
 const { SerialPort } = require("serialport");
 const { ReadlineParser } = require("@serialport/parser-readline");
+const fs = require('fs');
+const path = require('path');
+
+const dataFilePath = path.resolve(__dirname, 'data.json');
 
 const main = async () => {
   try {
@@ -79,10 +83,17 @@ parser.on('data', line => {
     const data = port.read();
     console.log("Data:readable", data);
     let buffer = Buffer.from(data, "hex");
-    if (buffer.length === 10 && buffer[0] === 0xaa && buffer[1] === 0xc0) {
+    if (buffer.length >= 9 && ((buffer[0] === 0xaa && buffer[1] === 0xc0) || buffer[0] === 0xc0)) {
       let pm25 = (buffer[3] * 256 + buffer[2]) / 10.0;
       let pm10 = (buffer[5] * 256 + buffer[4]) / 10.0;
-      console.log(`Readble PM2.5: ${pm25} μg/m3, PM10: ${pm10} μg/m3`);
+
+      const dataToSave = {
+        pm25,
+        pm10,
+        timestamp: new Date().toISOString()
+      };
+      
+      fs.writeFileSync(dataFilePath, JSON.stringify(dataToSave, null, 2), 'utf-8');
     }
   });
 
