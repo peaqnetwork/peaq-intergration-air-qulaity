@@ -13,7 +13,7 @@ const { SerialPort, ReadlineParser } = require("serialport");
 
 const seed =
   "put impulse gadget fence humble soup mother card yard renew chat quiz";
-const name = "peaq-iot";
+const name = "peaq-iot-1";
 
 const createDid = async () => {
   const sdkInstance = await Sdk.createInstance({
