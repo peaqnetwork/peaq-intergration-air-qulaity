@@ -94,6 +94,8 @@ parser.on('data', line => {
       };
       
       fs.writeFileSync(dataFilePath, JSON.stringify(dataToSave, null, 2), 'utf-8');
+
+      console.log(`Readble PM2.5: ${pm25} μg/m3, PM10: ${pm10} μg/m3`);
     }
   });
 
